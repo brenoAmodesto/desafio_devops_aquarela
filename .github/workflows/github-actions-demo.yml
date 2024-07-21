@@ -59,7 +59,7 @@ jobs:
         run: aws eks --region us-east-1 update-kubeconfig --name my-eks 
       
       - name: three/kubectl
-        run: kubectl apply -f deployment.yaml 
+        run: kubectl apply -f complete-demo.yaml 
       
       - name: four/kubectl
         run: kubectl apply -f service.yaml
