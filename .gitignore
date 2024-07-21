@@ -2,3 +2,4 @@
 .terraform/terraform.tfstate
 lixo.txt
 .terraform.lock.hcl
+LISTA_DE_ERROS.txt
