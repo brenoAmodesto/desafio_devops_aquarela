@@ -3,7 +3,7 @@
 3 -- Expor o serviço de frontend para internet usando um service do tipo load balancer.
 <html>
  <head>
-  <title>1 -- Laboratório sock-shop-demo <br /> para quebra de linha.</title>
+  1 -- Laboratório sock-shop-demo <br /> para quebra de linha
  </head>
  <body>
   2 -- Criar um cluster EKS <br /> para quebra de linha.
