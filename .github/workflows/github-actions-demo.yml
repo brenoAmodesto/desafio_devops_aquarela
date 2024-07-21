@@ -47,26 +47,25 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false     
+        run: terraform destroy -auto-approve -input=false     
+
+      # - name: setting 
+      #   run: aws eks --region us-east-1 update-kubeconfig --name my-eks
+      
+      # - name: get nodes
+      #   run: kubectl get nodes
+
+      # - name: kubectl deploy
+      #   run: |
+      #     kubectl apply -f complete-demo.yaml 
+      
+      # - name: esperar
+      #   run: sleep 30
+      
+      # - name: kubectl service
+      #   run: |
+      #     kubectl apply -f service.yaml 
+      
+      # - name: kubectl get services
+      #   run: kubectl get services
         
-      - name: two/kubectl
-        run: aws eks --region us-east-1 update-kubeconfig --name my-eks
-      
-      - name: get nodes
-        run: kubectl get nodes
-
-      - name: three/kubectl
-        run: |
-          kubectl apply -f complete-demo.yaml --validate=false
-      
-      - name: esperar
-        run: sleep 60
-      
-      - name: four/kubectl
-        run: |
-          kubectl apply -f service.yaml --validate=false
-      
-      
-
-
-
