@@ -13,4 +13,4 @@
 <img src="https://github.com/brenoAmodesto/lab-sock-shop/blob/main/img/front-end.png?raw=true" alt="">
 <img src="https://github.com/brenoAmodesto/lab-sock-shop/blob/main/img/terminal.png?raw=true"  alt="">
 <img src="https://github.com/brenoAmodesto/lab-sock-shop/blob/main/img/tflint.png?raw=true" alt="">
-<img src= "https://github.com/brenoAmodesto/lab-sock-shop/blob/main/img/terminal.png"       alt="">
+<img src="https://github.com/brenoAmodesto/lab-sock-shop/blob/main/img/actions_cluster.png?raw=true" alt="">
