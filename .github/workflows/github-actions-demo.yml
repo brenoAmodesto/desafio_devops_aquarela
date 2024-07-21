@@ -79,28 +79,28 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
-      # - name: Terraform Apply
-      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      #   run: terraform destroy -auto-approve -input=false     
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform destroy -auto-approve -input=false     
 
-      # - name: setting 
-      #   run: aws eks --region us-east-1 update-kubeconfig --name my-eks
+      - name: setting 
+        run: aws eks --region us-east-1 update-kubeconfig --name my-eks
       
-      # - name: get nodes
-      #   run: kubectl get nodes
+      - name: get nodes
+        run: kubectl get nodes
 
-      # - name: kubectl deploy
-      #   run: |
-      #     kubectl apply -f complete-demo.yaml 
+      - name: kubectl deploy
+        run: |
+          kubectl apply -f complete-demo.yaml 
       
-      # - name: esperar
-      #   run: sleep 30
+      - name: esperar
+        run: sleep 30
       
-      # - name: kubectl service
-      #   run: |
-      #     kubectl apply -f service.yaml 
+      - name: kubectl service
+        run: |
+           kubectl apply -f service.yaml 
       
-      # - name: kubectl get services
-      #   run: kubectl get services
+      - name: kubectl get services
+        run: kubectl get services
 
 
