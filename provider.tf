@@ -10,9 +10,8 @@ terraform {
     #   source  = "hashicorp/helm"
     #   version = ">= 2.6.0"
     # }
-
     aws = {
-      region = var.aws_region
+      source  = "hashicorp/aws"
       version = "5.59.0"
     }
   }
@@ -24,5 +23,11 @@ terraform {
     #encrypt        = true
     ##dynamodb_table = "terraform-state-lock"  # 
   }
-  
+
+}
+
+
+provider "aws" {
+  region = var.aws_region
+
 }
