@@ -1,40 +1,41 @@
-name: Lint
+name: Tflint Checks on Terraform Code
+    
 on:
   push:
-    branches: [ master ]
-  pull_request:
+    branches: 
+      - main
+
+permissions: read-all
 
 jobs:
-  tflint:
+  tflint-checks:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-
     steps:
-    - uses: actions/checkout@v4
-      name: Checkout source code
-
-    - uses: actions/cache@v4
+    
+# Checkout Repository
+    - name : Check out Git Repository
+      uses: actions/checkout@v3  
+      
+# TFLint - Terraform Check
+    - uses: actions/cache@v2
       name: Cache plugin dir
       with:
         path: ~/.tflint.d/plugins
         key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
 
-    - uses: terraform-linters/setup-tflint@v4
+    - uses: terraform-linters/setup-tflint@v2
       name: Setup TFLint
       with:
-        tflint_version: v0.50.3
-
+        github_token: ${{ secrets.CI_GITHUB_TOKEN }}
+        
+# Print TFLint version
     - name: Show version
       run: tflint --version
-
+      
+# Install plugins
     - name: Init TFLint
       run: tflint --init
-      env:
-        # https://github.com/terraform-linters/tflint/blob/master/docs/user-guide/plugins.md#avoiding-rate-limiting
-        GITHUB_TOKEN: ${{ github.token }}
-
+      
+# Run tflint command in each directory recursively # use --force if you want to continue with workflow although errors are there
     - name: Run TFLint
-      run: tflint -f compact
+      run: tflint -f compact --recursive
