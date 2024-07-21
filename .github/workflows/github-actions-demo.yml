@@ -60,11 +60,16 @@ jobs:
       
       - name: three/kubectl
         run: |
-          kubectl apply -f complete-demo.yaml 
+          kubectl apply -f complete-demo.yaml --validate=false
+      
+      - name: esperar
+        run: sleep 60
       
       - name: four/kubectl
         run: |
-          kubectl apply -f service.yaml
+          kubectl apply -f service.yaml --validate=false
+      
+      
 
 
 
