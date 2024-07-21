@@ -1,4 +1,4 @@
-name: "Terraform action"
+name: "Terraform / EKS / Tflint"
 on:
   push:
     branches:
@@ -12,6 +12,41 @@ env:
   TF_LOG: INFO
   AWS_REGION: ${{ secrets.AWS_REGION }}
 jobs:
+  
+
+  tflint-checks:
+    runs-on: ubuntu-latest
+    steps:
+    
+# Checkout Repository
+    - name : Check out Git Repository
+      uses: actions/checkout@v3  
+      
+# TFLint - Terraform Check
+    - uses: actions/cache@v2
+      name: Cache plugin dir
+      with:
+        path: ~/.tflint.d/plugins
+        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+
+    - uses: terraform-linters/setup-tflint@v2
+      name: Setup TFLint
+      with:
+        github_token: ${{ secrets.CI_GITHUB_TOKEN }}
+        
+# Print TFLint version
+    - name: Show version
+      run: tflint --version
+      
+# Install plugins
+    - name: Init TFLint
+      run: tflint --init
+      
+# Run tflint command in each directory recursively # use --force if you want to continue with workflow although errors are there
+    - name: Run TFLint
+      run: tflint -f compact --r
+  
+  
   deploy:
     runs-on: ubuntu-latest
     defaults:
@@ -45,9 +80,9 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform destroy -auto-approve -input=false     
+      # - name: Terraform Apply
+      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      #   run: terraform destroy -auto-approve -input=false     
 
       # - name: setting 
       #   run: aws eks --region us-east-1 update-kubeconfig --name my-eks
@@ -68,3 +103,5 @@ jobs:
       
       # - name: kubectl get services
       #   run: kubectl get services
+
+
