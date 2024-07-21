@@ -1,9 +1,6 @@
-provider "aws" {
-  region = var.aws_region
-  version = "~> 5.0"
-}
 
 terraform {
+  required_version = "~> 1.0"
   required_providers {
     # kubectl = {
     #   source  = "gavinbunney/kubectl"
@@ -13,6 +10,11 @@ terraform {
     #   source  = "hashicorp/helm"
     #   version = ">= 2.6.0"
     # }
+
+    provider "aws" {
+    region = var.aws_region
+    version = "~> 5.0"
+    }
   }
 
   backend "s3" {
@@ -22,6 +24,5 @@ terraform {
     #encrypt        = true
     ##dynamodb_table = "terraform-state-lock"  # 
   }
-
-  required_version = "~> 1.0"
+  
 }
