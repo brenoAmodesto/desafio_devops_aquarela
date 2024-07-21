@@ -56,11 +56,14 @@ jobs:
           sudo mv ./kubectl /usr/local/bin/kubectl 
       
       - name: two/kubectl
-        run: aws eks --region us-east-1 update-kubeconfig --name my-eks 
+        run: aws eks --region us-east-1 update-kubeconfig --name my-eks
       
+      - name: get nodes
+        run: kubectl get nodes
+
       - name: three/kubectl
         run: |
-          kubectl apply --v -f complete-demo.yaml --validate=false
+          kubectl apply -f complete-demo.yaml --validate=false
       
       - name: esperar
         run: sleep 60
