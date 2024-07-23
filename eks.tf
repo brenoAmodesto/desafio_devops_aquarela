@@ -7,12 +7,14 @@ module "eks" {
   cluster_name    = "my-eks"
   cluster_version = var.versão_do_cluster
 
-
-  cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
 
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
+  control_plane_subnet_ids = module.vpc.private_subnets
+  
+  authentication_mode                      = "API_AND_CONFIG_MAP"
+  enable_cluster_creator_admin_permissions = true
 
 
   enable_irsa = true
@@ -35,7 +37,7 @@ module "eks" {
       capacity_type  = "ON_DEMAND"
     }
 
-    spot = {
+    frontend = {
       desired_size = 3
       min_size     = 1
       max_size     = 10
@@ -54,8 +56,6 @@ module "eks" {
       capacity_type  = "SPOT"
     }
   }
-  authentication_mode                      = "API_AND_CONFIG_MAP"
-  enable_cluster_creator_admin_permissions = true
 
   tags = {
     Environment = "lab"
