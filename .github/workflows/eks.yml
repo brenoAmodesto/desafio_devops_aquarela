@@ -51,8 +51,9 @@ jobs:
       - name: Export Environment Variables
         id: export-env
         run: |
-          cluster_endpoint=$(terraform output -raw cluster_endpoint)
-          echo "CLUSTER_ENDPOINT=$cluster_endpoint" >> $GITHUB_ENV
+          cluster_endpoint=$(terraform output -raw cluster_endpoint) \
+          export CLUSTER_ENDPOINT="$cluster_endpoint"
+          echo "Cluster Endpoint: $CLUSTER_ENDPOINT"
 
       - name: Setup Kubeconfig
         run: aws eks --region sa-east-1 update-kubeconfig --name eks-demo
