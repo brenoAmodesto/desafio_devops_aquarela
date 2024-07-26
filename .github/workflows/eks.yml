@@ -60,19 +60,19 @@ jobs:
         run: echo ${{ env.CLUSTER_ENDPOINT }}
 
 
-      # - name: Setup Kubeconfig
-      #   run: aws eks --region sa-east-1 update-kubeconfig --name eks-demo
+      - name: Setup Kubeconfig
+        run: aws eks --region sa-east-1 update-kubeconfig --name eks-demo
 
-      # - name: Setup Helm
-      #   uses: azure/setup-helm@v1
+      - name: Setup Helm
+        uses: azure/setup-helm@v1
 
-      # - name: Install Karpenter
-      #   run: | 
-      #     helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --version 0.37.0 --namespace karpenter --create-namespace --set settings.clusterEndpoint=${{ env.CLUSTER_ENDPOINT }} -f karpenter/karpenter-values.yaml
+      - name: Install Karpenter
+        run: | 
+           helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --version 0.37.0 --namespace karpenter --create-namespace --set settings.clusterEndpoint=${{ env.CLUSTER_ENDPOINT }} -f karpenter/karpenter-values.yaml
 
-      # - name: Wait
-      #   run: sleep 30
+      - name: Wait
+        run: sleep 30
 
-      # - name: Apply Karpenter Node Pool
-      #   run: | 
-      #     kubectl apply -f karpenter/nodepool.yaml
+      - name: Apply Karpenter Node Pool
+        run: | 
+           kubectl apply -f karpenter/nodepool.yaml
