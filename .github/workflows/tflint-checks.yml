@@ -6,9 +6,9 @@ on:
       - main
   pull_request:
 permissions:
-  id-token: write # aws oidc connection
-  contents: read # actions/checkout
-  pull-requests: write # gh bot to comment PR
+  id-token: write
+  contents: read
+  pull-requests: write
 env:
   TF_LOG: INFO
   AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git Repository
-        uses: actions/checkout@v3  
+        uses: actions/checkout@v3
 
       - uses: actions/cache@v2
         name: Cache plugin dir
@@ -30,12 +30,12 @@ jobs:
         name: Setup TFLint
         with:
           github_token: ${{ secrets.CI_GITHUB_TOKEN }}
-        
+
       - name: Show version
         run: tflint --version
-      
+
       - name: Init TFLint
         run: tflint --init
-      
+
       - name: Run TFLint
         run: tflint -f compact --recursive

@@ -18,10 +18,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Git checkout
         uses: actions/checkout@v3
 
-      - name: Configure AWS Credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.AWS_ROLE }}
@@ -55,18 +55,18 @@ jobs:
           echo "CLUSTER_ENDPOINT=$cluster_endpoint" >> $GITHUB_ENV
 
       - name: Setup Kubeconfig
-        run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name eks-demo
+        run: aws eks --region sa-east-1 update-kubeconfig --name eks-demo
 
       - name: Setup Helm
         uses: azure/setup-helm@v1
 
       - name: Install Karpenter
-        run: |
+        run: | 
           helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --version 0.37.0 --namespace karpenter --create-namespace --set settings.clusterEndpoint=${{ env.CLUSTER_ENDPOINT }} -f karpenter/karpenter-values.yaml
 
       - name: Wait
         run: sleep 30
 
       - name: Apply Karpenter Node Pool
-        run: |
+        run: | 
           kubectl apply -f karpenter/nodepool.yaml
