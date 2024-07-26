@@ -53,7 +53,11 @@ jobs:
         env:
           CLUSTER_ENDPOINT: terraform output -raw cluster_endpoint
         run: |
-          echo "$CLUSTER_ENDPOINT"
+          cluster_endpoint=$(terraform output -raw cluster_endpoint)
+          echo "Cluster Endpoint: ${cluster_endpoint}" # For debug
+
+          echo "CLUSTER_ENDPOINT=${cluster_endpoint}" >> $GITHUB_ENV
+
 
       - name: Setup Kubeconfig
         run: aws eks --region sa-east-1 update-kubeconfig --name eks-demo
