@@ -1,3 +1,4 @@
+
 # Role allowing Karpenter to spin up nodes
 data "aws_iam_policy_document" "karpenter_node_role_policy" {
   statement {

@@ -1,0 +1,9 @@
+apiVersion: karpenter.k8s.aws/v1alpha1
+kind: AWSNodeTemplate
+metadata:
+  name: sock-shop-node-template
+spec:
+  subnetSelector:
+    karpenter.k8s.aws/discovery: sock-shop
+  securityGroupSelector:
+    karpenter.k8s.aws/discovery: sock-shop

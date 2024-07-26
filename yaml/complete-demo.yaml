@@ -263,6 +263,15 @@ spec:
       labels:
         name: front-end
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - frontend
       containers:
       - name: front-end
         image: weaveworksdemos/front-end:0.3.12
@@ -297,8 +306,6 @@ spec:
             port: 8079
           initialDelaySeconds: 30
           periodSeconds: 3
-      nodeSelector:
-        beta.kubernetes.io/os: linux
 ---
 apiVersion: v1
 kind: Service

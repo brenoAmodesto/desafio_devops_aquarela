@@ -1,63 +1,69 @@
-data "aws_caller_identity" "current" {}
-
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.20.0"
+  version = "20.10.0"
 
-  cluster_name    = "my-eks"
-  cluster_version = var.versão_do_cluster
+  cluster_name    = "eks-demo"
+  cluster_version = 1.29
 
-  cluster_endpoint_public_access  = true
-
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
-  control_plane_subnet_ids = module.vpc.private_subnets
-  
-  authentication_mode                      = "API_AND_CONFIG_MAP"
-  enable_cluster_creator_admin_permissions = true
-
-
-  enable_irsa = true
-
-  eks_managed_node_group_defaults = {
-    disk_size = 50
-  }
-
+  cluster_endpoint_public_access = true
+  enable_irsa                    = true
+  vpc_id                         = module.vpc.vpc_id
+  subnet_ids                     = module.vpc.private_subnets
+  control_plane_subnet_ids       = module.vpc.private_subnets
   eks_managed_node_groups = {
-    general = {
-      desired_size = 3
-      min_size     = 1
-      max_size     = 10
-
-      labels = {
-        role = "general"
+    eks_nodegroup_1 = {
+      min_size       = 1
+      max_size       = 4
+      desired_size   = 1
+      instance_types = ["m5.large"]
+      capacity_type  = "SPOT"
+      update_config = {
+        max_unavailable_percentage = 33
       }
-
-      instance_types = ["t3.small"]
-      capacity_type  = "ON_DEMAND"
     }
 
-    frontend = {
-      desired_size = 3
-      min_size     = 1
-      max_size     = 10
+    front_end = {
+        min_size = 1
+        max_size = 10
+        desired_size = 1
+        instance_types = ["t3.medium"]
 
-      labels = {
-        role = "spot"
-      }
+        labels = {
+          app = "frontend"
+        }
+    }
 
-      taints = [{
-        key    = "market"
-        value  = "spot"
-        effect = "NO_SCHEDULE"
-      }]
+    prometheus = {
+        min_size = 1
+        max_size = 10
+        desired_size = 1
+        instance_types = ["t3.medium"]
 
-      instance_types = ["t3.micro"]
-      capacity_type  = "SPOT"
+        labels = {
+          mon = "prometheus"
+        }
     }
   }
+  
 
-  tags = {
-    Environment = "lab"
+  node_security_group_tags = {
+    "karpenter.sh/discovery" = "eks-demo"
+  }
+  authentication_mode = "API"
+  # authentication_mode = "API_AND_CONFIG_MAP"
+  # With API Auth, creator no longer has cluster access, and users must be created.
+  access_entries = {
+    admin = {
+      kubernetes_groups = []
+      principal_arn     = "arn:aws:iam::471112841349:user/brenoamodesto@outlook.com"
+      policy_associations = {
+        example = {
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+          access_scope = {
+            type = "cluster"
+          }
+        }
+      }
+    }
   }
 }
