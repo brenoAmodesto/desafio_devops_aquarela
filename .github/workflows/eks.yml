@@ -51,12 +51,9 @@ jobs:
       - name: Export Environment Variables
         id: export-env
         env:
-          CLUSTER_ENDPOINT: terraform output -raw cluster_endpoint
+          CLUSTER_ENDPOINT: $(terraform output -raw cluster_endpoint)
         run: |
-          cluster_endpoint=$(terraform output -raw cluster_endpoint)
-          echo "Cluster Endpoint: ${cluster_endpoint}" # For debug
-
-          echo "CLUSTER_ENDPOINT=${cluster_endpoint}" >> $GITHUB_ENV
+         echo "$CLUSTER_ENDPOINT"
 
 
       - name: Setup Kubeconfig
