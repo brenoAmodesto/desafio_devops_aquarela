@@ -51,9 +51,8 @@ jobs:
       - name: Export Environment Variables
         id: export-env
         run: |
-          cluster_endpoint=$(terraform output -raw cluster_endpoint) \
-          export CLUSTER_ENDPOINT="$cluster_endpoint"
-          echo "Cluster Endpoint: $CLUSTER_ENDPOINT"
+          cluster_endpoint=$(terraform output -raw cluster_endpoint)
+          echo "CLUSTER_ENDPOINT=$cluster_endpoint" >> $GITHUB_ENV
 
       - name: Setup Kubeconfig
         run: aws eks --region sa-east-1 update-kubeconfig --name eks-demo
@@ -63,7 +62,7 @@ jobs:
 
       - name: Install Karpenter
         run: | 
-          helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --version 0.37.0 --namespace karpenter --create-namespace --set settings.clusterEndpoint=${CLUSTER_ENDPOINT} -f karpenter/karpenter-values.yaml
+          helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --version 0.37.0 --namespace karpenter --create-namespace --set settings.clusterEndpoint=${{ env.CLUSTER_ENDPOINT }} -f karpenter/karpenter-values.yaml
 
       - name: Wait
         run: sleep 30
