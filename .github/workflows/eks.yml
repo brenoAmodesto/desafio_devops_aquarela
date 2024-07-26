@@ -65,6 +65,9 @@ jobs:
 
       - name: Setup Helm
         uses: actions/checkout@v3
+      
+      - name: Kubectl get nodes
+        run: kubectl get nodes
 
       - name: Install Karpenter
         run: | 
