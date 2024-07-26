@@ -63,7 +63,7 @@ jobs:
 
       - name: Install Karpenter
         run: | 
-          helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --version 0.37.0 --namespace karpenter --create-namespace --set settings.clusterEndpoint=${{ env.CLUSTER_ENDPOINT }} -f karpenter/karpenter-values.yaml
+          helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter --version 0.37.0 --namespace karpenter --create-namespace --set settings.clusterEndpoint=${CLUSTER_ENDPOINT} -f karpenter/karpenter-values.yaml
 
       - name: Wait
         run: sleep 30
