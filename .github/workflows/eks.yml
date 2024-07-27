@@ -94,8 +94,8 @@ jobs:
       # - name: Horizontal Pod AutoScaler
       #   run: kubectl apply -f sockshopyaml/hpa.yaml
       
-      - name: kubectl create namespace
-        run: kubectl create namespace prometheus
+      #- name: kubectl create namespace
+      #  run: kubectl create namespace prometheus
       
       - name: Prometheus & Grafana
         run: |
