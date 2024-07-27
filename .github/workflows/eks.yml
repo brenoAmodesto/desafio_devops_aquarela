@@ -94,6 +94,9 @@ jobs:
       # - name: Horizontal Pod AutoScaler
       #   run: kubectl apply -f sockshopyaml/hpa.yaml
       
+      - name: kubectl create namespace
+        run: kubectl create namespace prometheus
+      
       - name: Prometheus & Grafana
         run: |
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts \
