@@ -14,5 +14,5 @@
 
 <img src="https://github.com/brenoAmodesto/lab-sock-shop/blob/main/img/grafana.png?raw=true" alt="">
 <img src="https://github.com/brenoAmodesto/lab-sock-shop/blob/main/img/prometheus-run.png?raw=true"  alt="">
-<img src="https://github.com/brenoAmodesto/lab-sock-shop/blob/main/img/teste_com_vegeta?raw=true" alt="">
+<img src="https://github.com/brenoAmodesto/lab-sock-shop/blob/main/img/teste_com_vegeta.png" alt="">
 <img src="https://github.com/brenoAmodesto/lab-sock-shop/blob/main/img/vegeta.png?raw=true" alt="">
