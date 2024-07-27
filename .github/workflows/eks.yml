@@ -89,8 +89,8 @@ jobs:
         run: kubectl apply -f sockshopyaml/complete-demo.yaml
       
       - name: Wait
-        run: Sleep 30
+        run: sleep 30
       
       - name: Horizontal Pod AutoScaler
-        run: apply -f sockshopyaml/hpa.yaml
+        run: kubectl apply -f sockshopyaml/hpa.yaml
       
