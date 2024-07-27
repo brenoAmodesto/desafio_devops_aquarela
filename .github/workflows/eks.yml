@@ -101,6 +101,9 @@ jobs:
         run: |
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts \
           helm repo update \
-          helm install stable prometheus-community/kube-prometheus-stack --values sockshopyaml/prometheus-values_v2.yaml -n prometheus 
+          helm install stable prometheus-community/kube-prometheus-stack -n prometheus 
+      
+      - name: Prometheus & Grafana yaml
+        run: kubectl apply -f sockshopyaml/prometheus-values_v2.yaml
 
       
