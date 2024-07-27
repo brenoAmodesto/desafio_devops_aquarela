@@ -64,7 +64,7 @@ jobs:
         run: aws eks --region sa-east-1 update-kubeconfig --name eks-demo
 
       - name: Setup Helm
-        uses: actions/checkout@v3
+        uses: azure/setup-helm@v1
       
       - name: Kubectl get nodes
         run: kubectl get nodes
