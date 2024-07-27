@@ -75,22 +75,29 @@ jobs:
       #      --set settings.clusterEndpoint=${{ env.CLUSTER_ENDPOINT }} \
       #      -f karpenter/karpenter-values.yaml
 
-      - name: Wait
-        run: sleep 30
+      # - name: Wait
+      #   run: sleep 30
 
-      - name: Apply Karpenter Node Pool
-        run: | 
-           kubectl apply -f karpenter/nodepool.yaml
+      # - name: Apply Karpenter Node Pool
+      #   run: | 
+      #      kubectl apply -f karpenter/nodepool.yaml
 
-      - name: Metrics Server
-        run: kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+      # - name: Metrics Server
+      #   run: kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
       
-      - name: Sock-Shop Deployment
-        run: kubectl apply -f sockshopyaml/complete-demo.yaml
+      # - name: Sock-Shop Deployment
+      #   run: kubectl apply -f sockshopyaml/complete-demo.yaml
       
-      - name: Wait
-        run: sleep 30
+      # - name: Wait
+      #   run: sleep 30
       
-      - name: Horizontal Pod AutoScaler
-        run: kubectl apply -f sockshopyaml/hpa.yaml
+      # - name: Horizontal Pod AutoScaler
+      #   run: kubectl apply -f sockshopyaml/hpa.yaml
+      
+      - name: Prometheus & Grafana
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts \
+          helm repo update \
+          helm install stable prometheus-community/kube-prometheus-stack -f prometheus-values.yaml -n prometheus 
+
       
