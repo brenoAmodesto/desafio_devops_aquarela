@@ -1,6 +1,6 @@
 
+Etapa 3 > <https://github.com/brenoAmodesto/lab-sock-shop/blob/main/readme2.md>
 <html>
- Etapa 3 > <https://github.com/brenoAmodesto/lab-sock-shop/blob/main/readme2.md>
  <head>
   1 -- Laboratório sock-shop-demo <br /> 2 -- Criar um cluster EKS
  </head>
