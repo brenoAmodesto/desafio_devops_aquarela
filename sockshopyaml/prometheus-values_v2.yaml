@@ -9,7 +9,6 @@ kubeEtcd:
   enabled: false
 kubeScheduler:
   enabled: false
-
 prometheus:
   prometheusSpec:
     serviceMonitorSelector:
@@ -20,27 +19,17 @@ prometheus:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
           - matchExpressions:
-            - key: disktype
+            - key: mon
               operator: In
               values:
-              - ssd
+              - prometheus
   service:
     type: LoadBalancer   # Expose Prometheus as a LoadBalancer
     port: 9090           # Port that Prometheus listens on
 commonLabels:
   prometheus: devops
-
 grafana:
   adminPassword: test123
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: disktype
-            operator: In
-            values:
-            - ssd
   service:
     type: LoadBalancer   # Expose Grafana as a LoadBalancer
     port: 80             # Port that Grafana listens on
