@@ -54,10 +54,6 @@ jobs:
           cluster_endpoint=$(terraform output -raw cluster_endpoint)
           echo "CLUSTER_ENDPOINT=${cluster_endpoint}" >> $GITHUB_ENV
           echo ${{ env.CLUSTER_ENDPOINT }}
-      
-      - name: echo
-        run: echo ${{ env.CLUSTER_ENDPOINT }}
-
 
       - name: Setup Kubeconfig
         run: aws eks --region sa-east-1 update-kubeconfig --name eks-demo

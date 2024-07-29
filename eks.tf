@@ -13,10 +13,10 @@ module "eks" {
   eks_managed_node_groups = {
     eks_nodegroup_1 = {
       min_size       = 1
-      max_size       = 4
-      desired_size   = 1
-      instance_types = ["m5.large"]
-      capacity_type  = "SPOT"
+      max_size       = 5
+      desired_size   = 2
+      instance_types = ["t3.medium"]
+      capacity_type  = "ON_DEMAND"
       update_config = {
         max_unavailable_percentage = 33
       }
