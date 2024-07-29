@@ -46,7 +46,6 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
 
       - name: Export Environment Variables
