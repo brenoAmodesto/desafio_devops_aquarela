@@ -17,8 +17,8 @@ module "eks" {
       desired_size   = 2
       instance_types = ["t3.medium"]
       capacity_type  = "ON_DEMAND"
-      update_config = {
-        max_unavailable_percentage = 33
+      labels = {
+        dedicated = "elasticsearch"
       }
     }
 
