@@ -97,6 +97,37 @@ jobs:
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
           helm repo update
           helm install stable prometheus-community/kube-prometheus-stack -f sockshopyaml/prometheus-values_v2.yaml -n prometheus
+
+      - name: EBS Driver
+        run: |
+          helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+          helm repo update
+          helm install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver --namespace kube-system
+      
+      - name: Install CRDS
+        run: kubectl create -f https://download.elastic.co/downloads/eck/2.13.0/crds.yaml
+      
+      - name: Install Operator RBAC
+        run: kubectl apply -f https://download.elastic.co/downloads/eck/2.13.0/operator.yaml
+      
+      - name: Kubectl apply -f elasticsearch
+        run: kubectl apply -f elasticsearch/elasticsearch.yaml
+      
+      - name: Wait
+        run: sleep 30
+      
+      - name: Kubectl apply -f kibana 
+        run: kubectl apply -f elasticsearch/kibana.yaml
+      
+      - name: Wait
+        run: sleep 60
+      
+      - name: Expose kibana service type load balancer
+        run: kubectl apply -f elasticsearch/kibana.yaml
+      
+      - name: APM Server
+        run: kubectl apply -f elasticsearch/apmserver.yaml
+
  
 
       
