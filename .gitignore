@@ -8,3 +8,4 @@ passos.txt
 /txts
 eks.txt
 /logs/*.txt
+/nodejs-apm-example/node_modules

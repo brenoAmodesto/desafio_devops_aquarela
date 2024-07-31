@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-apm-example
+  labels:
+    app: nodejs-apm-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-apm-example
+  template:
+    metadata:
+      labels:
+        app: nodejs-apm-example
+    spec:
+      containers:
+      - name: nodejs-apm-example
+        image: public.ecr.aws/n6f3m8h1/js-example:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: ELASTIC_APM_SERVER_URL
+          value: "http://localhost:8200" # Replace <APM_SERVER_URL> with your APM Server URL
+        - name: ELASTIC_APM_SERVICE_NAME
+          value: "nodejs-apm-example"
