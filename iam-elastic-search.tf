@@ -1,4 +1,4 @@
-resource "aws_iam_policy" "eks_node_policy" {
+resource "aws_iam_policy" "eks_node_ebs_policy" {
   name        = "EKSNodeEBSAccess"
   description = "Policy for EKS nodes to access EBS volumes"
   policy = jsonencode({
@@ -27,7 +27,7 @@ resource "aws_iam_policy" "eks_node_policy" {
 }
 
 data "aws_eks_cluster" "eks_cluster" {
-  name = "eks-demo"
+  name = module.eks.cluster_name
 }
 
 data "aws_eks_node_groups" "node_groups" {
@@ -45,4 +45,10 @@ resource "aws_iam_role_policy_attachment" "eks_node_policy_attachment" {
 
   role       = element(split("/", each.value.node_role_arn), 1)
   policy_arn = aws_iam_policy.eks_node_policy.arn
+
+  depends_on = [
+    module.eks,
+    aws_iam_policy.eks_node_ebs_policy
+  ]
+
 }
