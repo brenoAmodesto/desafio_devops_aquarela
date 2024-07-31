@@ -76,7 +76,13 @@ jobs:
       - name: Apply Karpenter Node Pool
         run: | 
            kubectl apply -f karpenter/nodepool.yaml
-
+      
+      - name: Rename 
+        run: mv iam-elastic-search.txt iam-elastic-search.tf
+      
+      - name: Apply
+        run: terraform apply
+      
       - name: Metrics Server
         run: kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
       
